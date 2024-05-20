@@ -1,8 +1,6 @@
-#include <Project/ProjectApplication.hpp>
+#include <cstdint>
 
-int main(int argc, char* argv[])
+int32_t main([[maybe_unused]] int32_t argc, [[maybe_unused]] char* argv[])
 {
-    ProjectApplication application;
-    application.Run();
     return 0;
 }
