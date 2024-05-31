@@ -71,6 +71,7 @@ protected:
     void AfterCreatedUiContext() override;
     void BeforeDestroyUiContext() override;
     bool Load() override;
+    void prepareBuf();
     void RenderScene(float deltaTime) override;
     void RenderUI(float deltaTime) override;
     void Update(float deltaTime) override;
@@ -78,6 +79,13 @@ protected:
 private:
     Model _cubes;
     uint32_t _shaderProgram;
+
+
+
+    unsigned int VBO;
+    unsigned int VAO;
+
+
 
     float _elapsedTime = 0.0f;
 
