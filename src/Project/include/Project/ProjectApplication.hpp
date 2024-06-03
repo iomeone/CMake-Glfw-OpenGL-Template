@@ -11,6 +11,13 @@
 #include <vector>
 #include <memory>
 
+
+
+#include <Project/vertex_batcher.hpp>
+#include <Project/shader.hpp>
+#include <Project/texture.hpp>
+
+
 struct Vertex
 {
     glm::vec3 Position;
@@ -77,15 +84,20 @@ protected:
     void Update(float deltaTime) override;
 
 private:
-    Model _cubes;
-    uint32_t _shaderProgram;
+    //Model _cubes;
+    //uint32_t _shaderProgram;
 
+    Rendering::Shader g_shader;
 
+    Rendering::Texture	 m_fretboard;
 
-    unsigned int VBO;
-    unsigned int VAO;
+    //unsigned int VBO;
+    //unsigned int VAO;
 
+    Rendering::VertexBatcher g_batcher;
 
+    glm::mat4x4			m_highwayProjection;
+    glm::mat4x4			m_highwayModelView;
 
     float _elapsedTime = 0.0f;
 
