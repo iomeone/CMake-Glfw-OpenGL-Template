@@ -83,6 +83,9 @@ protected:
     void RenderUI(float deltaTime) override;
     void Update(float deltaTime) override;
 
+
+    void UpdateTransformations();
+
 private:
     //Model _cubes;
     //uint32_t _shaderProgram;
@@ -100,6 +103,14 @@ private:
     glm::mat4x4			m_highwayModelView;
 
     float _elapsedTime = 0.0f;
+
+
+
+    glm::vec3 translationVec = glm::vec3(0, 1.81f, -1.94f);
+    float rotationAngle = glm::radians(-60.0f);  // ¶ÈÊý
+    glm::vec3 rotationAxis = glm::vec3(1, 0, 0);
+
+
 
     bool MakeShader(std::string_view vertexShaderFilePath, std::string_view fragmentShaderFilePath);
     void LoadModel(std::string_view filePath);

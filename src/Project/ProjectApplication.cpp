@@ -87,21 +87,17 @@ bool ProjectApplication::Load()
         IO_FreeImageData(&image);
     }
 
+    UpdateTransformations();
 
+    //glm::mat4x4 position = glm::mat4x4(1);
+ 
+    //position = glm::translate(position, glm::vec3(0, 1.81f, -1.94f));
+    //glm::quat rotation = glm::angleAxis(glm::radians(-60.0f), glm::vec3(1, 0, 0));
 
-    glm::mat4x4 position = glm::mat4x4(1);
-    //position = glm::translate(position, glm::vec3(0, 1.818f, -1.808f));
-    position = glm::translate(position, glm::vec3(0, 1.81f, 1.94f));
-    glm::quat rotation = glm::angleAxis(glm::radians(-60.0f), glm::vec3(1, 0, 0));
+ 
 
-    //position = glm::translate(position, glm::vec3(0, g_themeVars.highway_camera.offset, -g_themeVars.highway_camera.height));
-    //glm::quat rotation = glm::angleAxis(glm::radians(g_themeVars.highway_camera.rotation), glm::vec3(1, 0, 0));
-
-
-
-
-    m_highwayProjection = glm::perspective(glm::radians(HIGHWAY_FOV), 1.0f, 0.01f, 13.0f);
-    m_highwayModelView = glm::mat4_cast(rotation) * position;
+    //m_highwayProjection = glm::perspective(glm::radians(HIGHWAY_FOV), 1.0f, 0.01f, 13.0f);
+    //m_highwayModelView = glm::mat4_cast(rotation) * position;
 
     g_batcher.Create();
     if (!MakeShader("./data/shaders/main.vs.glsl", "./data/shaders/main.fs.glsl"))
@@ -305,17 +301,59 @@ void ProjectApplication::RenderScene([[maybe_unused]] float deltaTime)
     }*/
 }
 
+void ProjectApplication::UpdateTransformations()
+{
+    glm::mat4x4 position = glm::mat4x4(1);
+    position = glm::translate(position, translationVec);  // 使用 ImGui 修改后的变量
+    glm::quat rotation = glm::angleAxis(rotationAngle, rotationAxis);
+
+
+    m_highwayProjection = glm::perspective(glm::radians(HIGHWAY_FOV), 1.0f, 0.01f, 13.0f);
+    
+    m_highwayModelView = glm::mat4_cast(rotation) * position;
+}
+ 
+/*
+
+
+    //glm::mat4x4 position = glm::mat4x4(1);
+
+    //position = glm::translate(position, glm::vec3(0, 1.81f, -1.94f));
+    //glm::quat rotation = glm::angleAxis(glm::radians(-60.0f), glm::vec3(1, 0, 0));
+
+
+
+    //m_highwayProjection = glm::perspective(glm::radians(HIGHWAY_FOV), 1.0f, 0.01f, 13.0f);
+    //m_highwayModelView = glm::mat4_cast(rotation) * position;
+*/
+
 void ProjectApplication::RenderUI(float deltaTime)
 {
     ImGui::Begin("Window");
     {
-        ImGui::TextUnformatted("Hello World!");
+        //ImGui::TextUnformatted("Hello World!");
         ImGui::Text("Time in seconds since startup: %f", _elapsedTime);
         ImGui::Text("The delta time between frames: %f", deltaTime);
+
+
+
+        // 添加控件来修改 translationVec
+        if (ImGui::SliderFloat3("Translation", &translationVec.x, -10.0f, 10.0f)) {
+            // 这里可以加入响应代码，如果需要的话
+            UpdateTransformations();
+        }
+
+        // 添加控件来修改 rotationAngle 和 rotationAxis
+        if (ImGui::SliderAngle("Rotation Angle", &rotationAngle)) {
+            // 这里可以加入响应代码，如果需要的话
+            UpdateTransformations();
+        }
+
+
         ImGui::End();
     }
 
-    ImGui::ShowDemoWindow();
+    //ImGui::ShowDemoWindow();
 }
 
 bool ProjectApplication::MakeShader(std::string_view vertexShaderFilePath, std::string_view fragmentShaderFilePath)
