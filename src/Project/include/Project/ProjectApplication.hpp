@@ -90,7 +90,7 @@ private:
     //Model _cubes;
     //uint32_t _shaderProgram;
 
-    Rendering::Shader g_shader;
+    //Rendering::Shader g_shader;
 
     Rendering::Texture	 m_fretboard;
 
