@@ -97,7 +97,7 @@ private:
     //unsigned int VBO;
     //unsigned int VAO;
 
-    Rendering::VertexBatcher g_batcher;
+    //Rendering::VertexBatcher g_batcher;
 
     glm::mat4x4			m_highwayProjection;
     glm::mat4x4			m_highwayModelView;

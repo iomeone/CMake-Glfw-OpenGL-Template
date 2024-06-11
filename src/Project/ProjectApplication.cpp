@@ -5,6 +5,8 @@
 
 #include <Project/ProjectApplication.hpp>
 
+#include <Project/render_manager.h>
+
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <imgui.h>
@@ -99,7 +101,9 @@ bool ProjectApplication::Load()
     //m_highwayProjection = glm::perspective(glm::radians(HIGHWAY_FOV), 1.0f, 0.01f, 13.0f);
     //m_highwayModelView = glm::mat4_cast(rotation) * position;
 
-    g_batcher.Create();
+
+    //g_batcher.Create();
+    RenderManager::GetBatcher()->Create();
     if (!MakeShader("./data/shaders/main.vs.glsl", "./data/shaders/main.fs.glsl"))
     {
         return false;
@@ -187,15 +191,17 @@ void ProjectApplication::RenderScene([[maybe_unused]] float deltaTime)
     float noteSpeed = 5.0f;
     float fretboardOffset = time / 4.0f * noteSpeed;
 
+    fretboardOffset = 0.f;
+
 
     Rendering::VertexBatcher * batcher = &g_batcher;
 
     batcher->AddVertex(-1, -2.0f, 0, 0, 1 - fretboardOffset, 1, 1, 1, 1);
     batcher->AddVertex(1, -2.0f, 0, 1, 1 - fretboardOffset, 1, 1, 1, 1);
     batcher->AddVertex(1, 12.7f, 0, 1, -2.675f - fretboardOffset, 1, 1, 1, 1);
-    batcher->AddVertex(1, 12.7f, 0, 1, -2.675f - fretboardOffset, 1, 1, 1, 1);
-    batcher->AddVertex(-1, 12.7f, 0, 0, -2.675f - fretboardOffset, 1, 1, 1, 1);
-    batcher->AddVertex(-1, -2.0f, 0, 0, 1 - fretboardOffset, 1, 1, 1, 1);
+    //batcher->AddVertex(1, 12.7f, 0, 1, -2.675f - fretboardOffset, 1, 1, 1, 1);
+    //batcher->AddVertex(-1, 12.7f, 0, 0, -2.675f - fretboardOffset, 1, 1, 1, 1);
+    //batcher->AddVertex(-1, -2.0f, 0, 0, 1 - fretboardOffset, 1, 1, 1, 1);
 
     // Update and render
     batcher->Update();
